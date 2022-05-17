@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    h1 {text-align: center;}
+    h2 {text-align: center;}
+    h3 {text-align: center;}
+    h4 {text-align: center;}
+    h5 {text-align: center;}
+    h6 {text-align: center;}
+</style>
+
+<!-- Header with with a little glossary-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Supply Chain: Blockchain</title>
+    <br>
+    <h3><b>Blockchain Prototype for a Semi-Private Supply Chain</b></h3>
+    <h4>Rastreability and Traceability of Medicines</h4>
+    <h5><small>Created by Mauro Cardoso using ( Python, Flask and Ganache), ©2022</small></h5>
+    <h6><small><br><br>
+        Flask frontend application created for a healthcare supply chain, using the concepts of blockchain technology
+        <br><br>
+        <strong>This chain simulates the transactions between actors (Hard-coded) with their respective amounts.
+        <br> The Ganache application (Rapid Ethereum distribuited application development) works as a Private Ethereum Network,<br>
+        that handles the actors wallets, blocks and transactions.</strong><br>
+        <strong>These transactions create a hash for each of the data involved in the transaction.</strong><br>
+        <strong>Each transactions generates the details with all the logs acting as the ledger.</strong><br><br>
+        <strong>Smart contracts are built in a simple layout in the solidity language, with hard-coded details.</strong><br><br>
+        This network is supposed to be semi-private so the spaces below, simulate the spaces reserved for each participant,<br> 
+        being this number reduced there is a faster consensus and a higher transaction transfer rate and greater scalability.<br> 
+        If there is a change in interactions it can be easy discovered through the Ganache application, or business needs, only the admin can access and modify with ease.<br>
+        There is an obstacle in this implementation as it does not have a logic of permissions applied to the actors in the network and it has no structured process applied,<br>
+        acting only as a simulation of interaction between interfaces with the shell of a blockchain network. .<br><br>
+        The management of a B2B or enterprise network like this is managed by a Administrator in Ganache application.
+        <br><br>
+    </small></h6>
+
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="col-6 mx-auto mt-5 mb-5"></div>
+                <a href="http://127.0.0.1:5000"><button class="btn btn-outline-info">Refresh Page</button></a>
+            </div>
+        </div>
+    </div>
+    
+</head>
+
+<body>
+<!-- Container with the button to hide and show the Pharma Manufacturer Transaction to hospital section-->
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mx-auto mt-2 mb-2"></div>
+            <button  onclick="toggleText()" class="btn btn-outline-info"> Pharmaceuticals Transaction </button>
+            <script type="text/javascript">
+                function toggleText() {
+                    var x = document.getElementById("Pharma");
+                    if (x.style.display === "none") {
+                    x.style.display = "block";
+                    } else {
+                    x.style.display = "none";
+                    }
+                }
+            </script>
+        </div>
+    </div>
+
+<!-- Container with the forms to register the data from Pharma Manufacturer to hospital transactions-->
+    <div id="Pharma" class="container" style="display:none">
+        <div class="row">
+            <div class="col-6 mx-auto mt-5"></div>
+            <h6 class="mb-5">(Hospital to Manufacturer Smart Contract)</h6>
+            <div class="col text-center">
+            <form action="{{url_for('contract_hospital')}}" method = POST>
+                <button  class="btn btn-primary">Create Contract</button>
+            </form></div>
+            <div class="col text-center">
+            <form action="{{url_for('transaction_hospital')}}" method = POST>
+                <label for="h_Value" class="form-label">Amount</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">#</span>
+                    <input type="text" class="form-control" id="h_Value" aria-describedby="basic-addon3" name="h_Value">
+                </div>
+                <button class="btn btn-primary">Submit Transaction</button>
+            </form></div>
+        </div>
+    </div>
+
+<!-- Container with the button to hide and show the Regulator to Manufacturer Transaction section-->
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto mt-2 mb-2"></div>
+        <button  onclick="toggleText1()" class="btn btn-outline-info"> Regulation Transaction </button>
+        <script type="text/javascript">
+            function toggleText1() {
+                var x = document.getElementById("regulator");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+                } else {
+                x.style.display = "none";
+                }
+            }
+        </script>
+    </div>
+</div>
+
+<!-- Container with the forms to register the data from Regulator to Manufacturer transactions-->
+<div id="regulator" class="container" style="display:none">
+    <div class="row">
+        <div class="col-6 mx-auto mt-5"></div>
+        <h6 class="mb-5">(Regulator and Manufacturer Smart Contract)</h6>
+        <div class="col text-center">
+        <form action="{{url_for('contract_regulator')}}" method = POST>
+            <button  class="btn btn-primary">Create Contract (Pharma Regulation)</button>
+        </form></div>
+        <div class="col text-center">
+            <form action="{{url_for('transaction_regulator')}}" method = POST>
+                <button  class="btn btn-primary">Submit Transaction (Regulator Approval)</button>
+            </form></div>
+        </div>
+    </div>
+</div>
+
+<!-- Container with the button to hide and show the from Manufacturer to distribuitor section-->
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto mt-2 mb-2"></div>
+        <button  onclick="toggleText2()" class="btn btn-outline-info"> Distribuition Transaction </button>
+        <script type="text/javascript">
+            function toggleText2() {
+                var x = document.getElementById("Distribuition");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+                } else {
+                x.style.display = "none";
+                }
+            }
+        </script>
+    </div>
+</div>
+
+<!-- Container with the forms to register the data from Manufacturer to distribuitor transactions-->
+<div id="Distribuition" class="container" style="display:none">
+    <div class="row">
+        <div class="col-6 mx-auto mt-5"></div>
+        <h6 class="mb-5">(Manufacturer and Distribuitor Smart Contract)</h6>
+        <div class="col text-center">
+        <form action="{{url_for('contract_distribuitor')}}" method = POST>
+            <button  class="btn btn-primary">Create Distribuition Contract</button>
+        </form></div>
+        <div class="col text-center">
+            <form action="{{url_for('transaction_distribuitor')}}" method = POST>
+                <label for="d_Value" class="form-label">Amount</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">#</span>
+                    <input type="text" class="form-control" id="d_Value" aria-describedby="basic-addon3" name="d_Value">
+                </div>
+                <button class="btn btn-primary">Submit Distribuition Transaction Payment</button>
+            </form></div>
+        </div>
+    </div>
+</div>
+
+</body>
+    <br><br><h6><small>
+        Future implementation:
+        <br><br>
+        <strong>Create a process logistics associated with the network through smart contracts in solidity language.</strong><br>
+        <strong>Thank you.</strong>
+    </small></h6>
+</html>
+
